@@ -1,0 +1,7 @@
+.idea/
+images/
+masks/
+paper-textures/
+tests/
+__pycache__
+venv
