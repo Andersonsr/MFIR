@@ -8,7 +8,7 @@ except ModuleNotFoundError:
     from paths import Paths
 
 
-def generateDataset(readDirectory, savePath):
+def generateDataset(readDirectory, savePath, burstSize):
     formats = ['png', 'jpg']
     imageList = os.listdir(readDirectory)
     counter = 0
@@ -20,22 +20,26 @@ def generateDataset(readDirectory, savePath):
 
         for img in imageList:
             logging.debug('generating burst for {}'.format(img))
-
+            if counter >= 200:
+                break
             if img.split('.')[-1] in formats:
                 directory = os.path.join(savePath, 'img{}'.format(counter))
                 os.mkdir(directory)
 
                 options = {
-                    'maxTranslation': 0,
-                    'minTranslation': 0,
-                    'maxRotation': 0,
-                    'minRotation': 0,
-                    'noiseTypes': [1, 2],
+                    'translationRange': (0.0, 0.0),
+                    'rotationRange': (0.0, 0.0),
+                    'speckleRange': (5, 10),
+                    'gaussianRange': (5, 10),
+                    'noiseProbability': 0.5,
+                    'noiseTypes': ['gaussian', 'speckle'],
                     'crop': True,
                     'applyScratches': True,
+                    'lowResProbability': 0.8,
+                    'blurProbability': 0.05,
+                    'alphaRange': (0.75, 0.85),
                 }
-
-                generateSyntheticBurst(os.path.join(readDirectory, img), directory, 10, **options)
+                generateSyntheticBurst(os.path.join(readDirectory, img), directory, burstSize, **options)
                 counter += 1
 
 
@@ -47,10 +51,12 @@ if __name__ == '__main__':
                         help='path to folder used to store the result')
     parser.add_argument('-d', '--debug', default=False, action='store_true',
                         help='show debugging level log')
+    parser.add_argument('-n', '--burstSize', type=int, default=10, help='show debugging level log')
 
     args = parser.parse_args()
 
     if args.debug:
         logging.basicConfig(level=logging.DEBUG, format='%(levelname)s - %(message)s')
 
-    status = generateDataset(args.input, args.output)
+    generateDataset(args.input, args.output, args.burstSize)
+

@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 # Source: https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life
-# WAN, Z. et al. Bringing old photos back to life. In: Proceedings of the IEEE/CVF
+# reference: WAN, Z. et al. Bringing old photos back to life. In: Proceedings of the IEEE/CVF
 # Conference on Computer Vision and Pattern Recognition (CVPR). [S.l.: s.n.], 2020.
 
 from PIL import Image

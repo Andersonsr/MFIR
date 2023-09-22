@@ -82,4 +82,15 @@ def readMask(filename):
     return mask
 
 
+def randomCrop(img, width, height):
+    h, w, c = img.shape
+    if w < width or h < height:
+        scale = max(width/w, height/h)
+        newWidth = w * scale
+        newHeight = h * scale
+        img = cv2.resize(img, (newWidth, newHeight))
+        h, w, c = img.shape
 
+    cropX = randint(0, w-width)
+    cropY = randint(0, h-height)
+    return img[cropY:cropY+height, cropX:cropX+width]
