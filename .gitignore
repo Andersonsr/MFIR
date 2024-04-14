@@ -1,8 +1,13 @@
 .idea/
 images/
+dataset/
 masks/
 paper-textures/
 tests/
 __pycache__
 venv
 moveStuff.py
+pwcnet/
+defeitos/
+flows/
+alignment/real/
